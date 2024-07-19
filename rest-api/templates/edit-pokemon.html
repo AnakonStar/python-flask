@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css"
+      rel="nofollow"
+      integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I"
+      crossorigin="anonymous"
+    />
+    <title>{{ title }}</title>
+  </head>
+  <body>
+    <main
+      class="w-100 h-100 overflow-hidden p-0 m-0 d-flex justify-content-center"
+    >
+      <div class="card col-4 m-4">
+        <img
+          class="card-img-top"
+          src="{{ pokemon.sprites.front_default }}"
+          alt="{{ pokemon.name }}"
+        />
+        <div class="card-body">
+          <p
+            class="card-title text-capitalize text-center"
+            style="font-size: 35px; color: #000"
+          >
+            {{ pokemon.name }}
+          </p>
+          <label class="mb-2 text-primary" for="ability">Habilidades</label>
+          <div class="row mb-4">
+            {% for ability in pokemon.abilities %}
+            <span id="ability" class="cart-title text-capitalize col">
+              {{ability.ability.name}}
+            </span>
+            {% endfor %}
+          </div>
+          <label class="mb-2 text-primary" for="stats">Status</label>
+          <div id="stats" class="row gap-3">
+            {% for stat in pokemon.stats %}
+            <div class="col-4 flex-column d-flex">
+              <label for="stat" class="text-uppercase text-danger"
+                >{{stat.stat.name}}</label
+              >
+              <span id="stat" class="cart-title text-capitalize"
+                >{{stat.base_stat}}</span
+              >
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+      integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js"
+      integrity="sha384-oesi62hOLfzrys4LxRF63OJCXdXDipiYWBnvTl9Y9/TRlw5xlKIEHpNyvvDShgf/"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>
