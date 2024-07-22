@@ -10,50 +10,71 @@
       integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I"
       crossorigin="anonymous"
     />
-    <title>{{ title }}</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <title>Pokemon Details</title>
   </head>
   <body>
-    <main
-      class="w-100 h-100 overflow-hidden p-0 m-0 d-flex justify-content-center"
-    >
-      <div class="card col-4 m-4">
-        <img
-          class="card-img-top"
-          src="{{ pokemon.sprites.front_default }}"
-          alt="{{ pokemon.name }}"
-        />
-        <div class="card-body">
-          <p
-            class="card-title text-capitalize text-center"
-            style="font-size: 35px; color: #000"
-          >
-            {{ pokemon.name }}
-          </p>
-          <label class="mb-2 text-primary" for="ability">Habilidades</label>
-          <div class="row mb-4">
-            {% for ability in pokemon.abilities %}
-            <span id="ability" class="cart-title text-capitalize col">
-              {{ability.ability.name}}
-            </span>
-            {% endfor %}
-          </div>
-          <label class="mb-2 text-primary" for="stats">Status</label>
-          <div id="stats" class="row gap-3">
-            {% for stat in pokemon.stats %}
-            <div class="col-4 flex-column d-flex">
-              <label for="stat" class="text-uppercase text-danger"
-                >{{stat.stat.name}}</label
+    <div id="app">
+      {% raw %}
+      <main
+        class="w-100 h-100 overflow-hidden p-0 m-0 d-flex justify-content-center"
+      >
+        <div class="card col-4 m-4">
+          <img class="card-img-top" :src="sprite" :alt="name" />
+          <div class="card-body">
+            <p
+              class="card-title text-capitalize text-center"
+              style="font-size: 35px; color: #000"
+            >
+              {{ name }}
+            </p>
+            <label class="mb-2 text-primary" for="ability">Habilidades</label>
+            <div id="ability" class="row mb-4">
+              <span
+                v-for="ability in abilities"
+                :key="ability.ability.name"
+                class="cart-title text-capitalize col"
               >
-              <span id="stat" class="cart-title text-capitalize"
-                >{{stat.base_stat}}</span
-              >
+                {{ ability.ability.name }}
+              </span>
             </div>
-            {% endfor %}
+            <label class="mb-2 text-primary" for="stats">Status</label>
+            <div id="stats" class="row gap-3">
+              <div
+                v-for="stat in stats"
+                :key="stat.stat.name"
+                class="col-4 flex-column d-flex"
+              >
+                <label for="stat" class="text-uppercase text-danger">
+                  {{ stat.stat.name }}
+                </label>
+                <span id="stat" class="cart-title text-capitalize">
+                  {{ stat.base_stat }}
+                </span>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </main>
+      </main>
+      {% endraw %}
+    </div>
 
+    <script>
+      const { createApp, ref } = Vue;
+
+      createApp({
+        setup() {
+          const name = ref('{{ pokemon.name }}');
+          const abilities = ref(
+            JSON.parse('{{ pokemon.abilities | tojson | safe }}'),
+          );
+          const stats = ref(JSON.parse('{{ pokemon.stats | tojson | safe }}'));
+          const sprite = ref('{{ pokemon.sprites.front_default }}');
+
+          return { name, abilities, stats, sprite };
+        },
+      }).mount('#app');
+    </script>
     <script
       src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
       integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
