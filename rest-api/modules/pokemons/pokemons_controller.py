@@ -1,4 +1,4 @@
-from flask import render_template;
+from flask import render_template, request;
 import requests;
 
 def init_pokemon_routes(app):
@@ -29,3 +29,4 @@ def init_pokemon_routes(app):
             return render_template('edit-pokemon.html', title='Pokemon', pokemon=data)
         else:
             return 'Failed to fetch data'
+        

@@ -1,89 +1,152 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link
-      rel="stylesheet"
-      href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css"
-      rel="nofollow"
-      integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I"
-      crossorigin="anonymous"
-    />
-    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-    <title>Pokemon Details</title>
-  </head>
-  <body>
-    <div id="app">
-      {% raw %}
-      <main
-        class="w-100 h-100 overflow-hidden p-0 m-0 d-flex justify-content-center"
+{% extends "master.html" %} {% block content %} {% raw %}
+<main
+  style="height: 100svh; gap: 40px"
+  class="overflow-hidden w-100 p-0 m-0 d-flex align-items-center justify-content-center"
+>
+  <div class="card col-3 p-0 m-0">
+    <img class="card-img-top" :src="sprite" :alt="name" />
+    <div class="card-body">
+      <p
+        class="card-title text-capitalize text-center"
+        style="font-size: 35px; color: #000"
       >
-        <div class="card col-4 m-4">
-          <img class="card-img-top" :src="sprite" :alt="name" />
-          <div class="card-body">
-            <p
-              class="card-title text-capitalize text-center"
-              style="font-size: 35px; color: #000"
-            >
-              {{ name }}
-            </p>
-            <label class="mb-2 text-primary" for="ability">Habilidades</label>
-            <div id="ability" class="row mb-4">
-              <span
-                v-for="ability in abilities"
-                :key="ability.ability.name"
-                class="cart-title text-capitalize col"
-              >
-                {{ ability.ability.name }}
-              </span>
-            </div>
-            <label class="mb-2 text-primary" for="stats">Status</label>
-            <div id="stats" class="row gap-3">
-              <div
-                v-for="stat in stats"
-                :key="stat.stat.name"
-                class="col-4 flex-column d-flex"
-              >
-                <label for="stat" class="text-uppercase text-danger">
-                  {{ stat.stat.name }}
-                </label>
-                <span id="stat" class="cart-title text-capitalize">
-                  {{ stat.base_stat }}
-                </span>
-              </div>
-            </div>
-          </div>
+        {{ name }}
+      </p>
+      <label class="mb-2 text-primary" for="ability">Habilidades</label>
+      <div id="ability" class="row mb-4">
+        <span
+          v-for="ability in abilities"
+          :key="ability.ability.name"
+          class="cart-title text-capitalize col"
+        >
+          {{ ability.ability.name }}
+        </span>
+      </div>
+      <label class="mb-2 text-primary" for="stats">Status</label>
+      <div id="stats" class="row gap-3">
+        <div
+          v-for="stat in stats"
+          :key="stat.stat.name"
+          class="col-4 flex-column d-flex"
+        >
+          <label for="stat" class="text-uppercase text-danger">
+            {{ stat.stat.name }}
+          </label>
+          <span id="stat" class="cart-title text-capitalize">
+            {{ stat.base_stat }}
+          </span>
         </div>
-      </main>
-      {% endraw %}
+      </div>
     </div>
+  </div>
+  <form
+    @submit.prevent="sendForms"
+    style="gap: 15px"
+    class="form d-flex flex-column w-25 p-0"
+  >
+    <h3>Entre em contato</h3>
+    <div class="form-group">
+      <label class="form-label" for="name">Nome</label>
+      <input
+        v-model="userName"
+        class="form-control"
+        type="text"
+        id="name"
+        placeholder="Digite seu nome"
+      />
+    </div>
+    <div class="form-group">
+      <label class="form-label" for="email">Email</label>
+      <input
+        v-model="userEmail"
+        class="form-control"
+        type="text"
+        id="email"
+        placeholder="Digite seu telefone"
+      />
+    </div>
+    <div class="form-group">
+      <label class="form-label" for="tel">Telefone</label>
+      <input
+        v-model="userTel"
+        class="form-control"
+        type="tel"
+        id="tel"
+        placeholder="Digite seu telefone"
+      />
+    </div>
+    <button type="submit" class="btn btn-primary">Enviar</button>
+  </form>
+</main>
 
-    <script>
-      const { createApp, ref } = Vue;
+{% endraw %} {% endblock %} {% block scripts %}
+<script>
+  const { createApp, ref } = Vue;
 
-      createApp({
-        setup() {
-          const name = ref('{{ pokemon.name }}');
-          const abilities = ref(
-            JSON.parse('{{ pokemon.abilities | tojson | safe }}'),
-          );
-          const stats = ref(JSON.parse('{{ pokemon.stats | tojson | safe }}'));
-          const sprite = ref('{{ pokemon.sprites.front_default }}');
+  createApp({
+    setup() {
+      const userName = ref('');
+      const userEmail = ref('');
+      const userTel = ref('');
 
-          return { name, abilities, stats, sprite };
-        },
-      }).mount('#app');
-    </script>
-    <script
-      src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-      integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js"
-      integrity="sha384-oesi62hOLfzrys4LxRF63OJCXdXDipiYWBnvTl9Y9/TRlw5xlKIEHpNyvvDShgf/"
-      crossorigin="anonymous"
-    ></script>
-  </body>
-</html>
+      const name = ref('{{ pokemon.name }}');
+      const abilities = ref(
+        JSON.parse('{{ pokemon.abilities | tojson | safe }}'),
+      );
+      const stats = ref(JSON.parse('{{ pokemon.stats | tojson | safe }}'));
+      const sprite = ref('{{ pokemon.sprites.front_default }}');
+
+      async function sendForms() {
+        async function send() {
+          try {
+            const response = await axios.post(
+              'http://127.0.0.1:5000/send-forms',
+              {
+                userName: userName.value,
+                userEmail: userEmail.value,
+                userTel: userTel.value,
+              },
+            );
+            if (!response.ok) throw new Error('Network response was not ok');
+            const data = await response.json(); // Assuming the server responds with JSON
+            console.log(data); // Handle the response data
+          } catch (error) {
+            console.error('Error:', error);
+          }
+        }
+
+        Swal.fire({
+          title: 'Example Alert',
+          text: 'This is an alert from SweetAlert2',
+          icon: 'info',
+          showCancelButton: true, // Show cancel button
+          confirmButtonText: 'Cool',
+          preConfirm: () => {
+            // Function to execute before modal closes on confirm
+            return send(); // Call your send function here
+          },
+        }).then(result => {
+          if (result.isConfirmed) {
+            // Function to execute after modal closes on confirm
+            console.log('Confirmed');
+          } else if (result.dismiss === Swal.DismissReason.cancel) {
+            // Function to execute after modal closes on cancel
+            console.log('Cancelled');
+          }
+        });
+      }
+
+      return {
+        name,
+        abilities,
+        stats,
+        sprite,
+        sendForms,
+        userEmail,
+        userName,
+        userTel,
+      };
+    },
+  }).mount('#app');
+</script>
+{% endblock %}
