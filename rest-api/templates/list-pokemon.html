@@ -2,7 +2,10 @@
 <main
   class="overflow-hidden w-100 p-0 m-0 d-flex align-items-center justify-content-center"
 >
-  <ul class="row p-0 m-0">
+  <ul
+    class="row p-0 m-0 d-flex justify-content-center align-items-center"
+    style="gap: 20px"
+  >
     {% for pokemon in pokemons %}
     <li class="card col-2 list-unstyled">
       <a class="text-decoration-none" href="./{{ pokemon.name }}">

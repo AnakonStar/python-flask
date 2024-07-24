@@ -1,9 +1,9 @@
 {% extends "master.html" %} {% block content %} {% raw %}
 <main
-  style="height: 100svh; gap: 40px"
+  style="gap: 40px"
   class="overflow-hidden w-100 p-0 m-0 d-flex align-items-center justify-content-center"
 >
-  <div class="card col-3 p-0 m-0">
+  <div class="card col-4 p-0 m-0">
     <img class="card-img-top" :src="sprite" :alt="name" />
     <div class="card-body">
       <p
@@ -83,7 +83,7 @@
 <script>
   const { createApp, ref } = Vue;
 
-  createApp({
+  const app = createApp({
     setup() {
       const userName = ref('');
       const userEmail = ref('');
@@ -107,7 +107,8 @@
                 userTel: userTel.value,
               },
             );
-            if (!response.ok) throw new Error('Network response was not ok');
+            if (response.status !== 200)
+              throw new Error('Network response was not ok');
             const data = await response.json(); // Assuming the server responds with JSON
             console.log(data); // Handle the response data
           } catch (error) {
@@ -115,7 +116,7 @@
           }
         }
 
-        Swal.fire({
+        const alert = await Swal.fire({
           title: 'Example Alert',
           text: 'This is an alert from SweetAlert2',
           icon: 'info',
@@ -125,15 +126,15 @@
             // Function to execute before modal closes on confirm
             return send(); // Call your send function here
           },
-        }).then(result => {
-          if (result.isConfirmed) {
-            // Function to execute after modal closes on confirm
-            console.log('Confirmed');
-          } else if (result.dismiss === Swal.DismissReason.cancel) {
-            // Function to execute after modal closes on cancel
-            console.log('Cancelled');
-          }
         });
+
+        if (alert.isConfirmed) {
+          // Function to execute after modal closes on confirm
+          console.log('Confirmed');
+        } else if (alert.dismiss === Swal.DismissReason.cancel) {
+          // Function to execute after modal closes on cancel
+          console.log('Cancelled');
+        }
       }
 
       return {
@@ -147,6 +148,7 @@
         userTel,
       };
     },
-  }).mount('#app');
+  });
+  app.mount('#app');
 </script>
 {% endblock %}

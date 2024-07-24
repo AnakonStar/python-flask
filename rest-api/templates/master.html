@@ -15,31 +15,38 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
       rel="stylesheet"
     />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+      rel="stylesheet"
+    />
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-    <script src="https://cdn.jsdelivr.net/npm/vue-toaster@2.0.0/mixin.min.js"></script>
 
     <title>Pokemon Details</title>
   </head>
   <body>
-    <header class="p-8 w-100 bg-primary sticky-top" style="padding: 10px">
+    <header class="p-8 w-100 fixed-top" style="padding: 10px">
       <a href="./">
-        <i class="fa-solid fa-bars fa-xl" style="color: #ffffff"></i>
+        <i class="fa-solid fa-home fa-xl" style="color: #000"></i>
       </a>
     </header>
 
-    <main>
+    <main class="my-4">
       <div id="app">
         <!-- Page specific content will go here -->
         {% block content %}{% endblock %}
       </div>
     </main>
 
-    <footer>
-      <!-- Common footer content -->
+    <footer class="w-100 bg-primary">
+      <div
+        class="d-flex justify-content-center align-items-center"
+        style="padding-block: 10px"
+      >
+        <span class="text-white">Pokemon API</span>
+      </div>
     </footer>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"></script>
     <script
       src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
       integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
